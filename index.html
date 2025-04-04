@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacts Directory</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+        }
+        .container {
+            max-width: 95%;
+            margin: 20px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        h2, h3 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        .search-box, .filter-dropdown, .directory-selector {
+            padding: 8px 12px;
+            font-size: 14px;
+            border: 1px solid #dcdfe3;
+            border-radius: 6px;
+            background-color: #f9f9f9;
+            transition: border-color 0.3s ease;
+            flex: 1 1 180px;
+            box-sizing: border-box;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.05);
+            font-size: 12px;
+        }
+        table thead {
+            background-color: #007bff;
+            color: white;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #e8f0fe;
+        }
+        #map-container {
+            margin-top: 20px;
+            display: none;
+        }
+        iframe {
+            width: 100%;
+            height: 300px;
+            border: none;
+            border-radius: 8px;
+        }
+        @media screen and (max-width: 768px) {
+            .filters {
+                flex-direction: column;
+                align-items: center;
+            }
+            th, td {
+                font-size: 10px;
+                padding: 6px;
+            }
+            .search-box, .filter-dropdown, .directory-selector {
+                width: 100%;
+            }
+            iframe {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Teztour Greece Directory</h2>
+
+        <div class="filters">
+            <select id="directorySelect" class="directory-selector">
+                <option value="directory1">Office Contacts</option>
+                <option value="directory2">Service Staff contacts</option>
+                <option value="directory3">Sending Offices</option>
+            </select>
+        </div>
+
+        <div id="directories">
+            <div id="directory1" class="directory">
+                <h3>Office Contacts</h3>
+                <input type="text" class="search-box" placeholder="Search...">
+                <div class="filters">
+                    <select class="filter-dropdown department-filter"></select>
+                    <select class="filter-dropdown region-filter"></select>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>NAME</th>
+                            <th>VOIP</th>
+                            <th>DEPARTMENT</th>
+                            <th>POSITION</th>
+                            <th>CONTACTS</th>
+                            <th>EMAIL</th>
+                            <th>REGION</th>
+                            <th>LOCATION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>CHARITIDIS DIMITRIOS</td>
+                            <td>4877, 4497</td>
+                            <td>MANAGEMENT</td>
+                            <td>CEO / MANAGING DIRECTOR</td>
+                            <td>6936002301</td>
+                            <td>d.charitidis@teztour.gr</td>
+                            <td>CRETE</td>
+                            <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+                        </tr>
+					<tr>
+    <td>APLADENAKIS MANOLIS</td>
+    <td>4801</td>
+    <td>MANAGEMENT</td>
+    <td>GENERAL MANAGER</td>
+    <td>6936002307</td>
+    <td>manolis@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>FOUNDOULIS TASOS</td>
+    <td>4839</td>
+    <td>MANAGEMENT</td>
+    <td>FINANCIAL MANAGER</td>
+    <td>6949740000</td>
+    <td>tfountoulis@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>SARIDOU MARIA</td>
+    <td>4802 / 2810347206</td>
+    <td>MANAGEMENT</td>
+    <td>ADMINISTRATIVE ASSISTANT</td>
+    <td>6980687633</td>
+    <td>m.saridou@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>KONIDAKIS NIKOS</td>
+    <td>4838</td>
+    <td>FINANCIAL</td>
+    <td>EXECUTIVE</td>
+    <td></td>
+    <td>n.konidakis@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>MARKAKIS MICHALIS</td>
+    <td>4836</td>
+    <td>ACCOUNTING</td>
+    <td>CASHIER</td>
+    <td></td>
+    <td>m.markakis@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>LIBRITI FRATZESKA</td>
+    <td>4813</td>
+    <td>ACCOUNTING</td>
+    <td>EXECUTIVE</td>
+    <td></td>
+    <td>f.libriti@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>TZAGKARAKI MELINA</td>
+    <td>4812</td>
+    <td>ACCOUNTING</td>
+    <td>ASSISTANT</td>
+    <td></td>
+    <td>m.tsagaraki@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>LILYA PELEVINA</td>
+    <td>4857</td>
+    <td>ACCOUNTING</td>
+    <td>ERP</td>
+    <td></td>
+    <td>l.pelevina@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>KILADI IRINI</td>
+    <td>4858</td>
+    <td>ACCOUNTING</td>
+    <td>ASSISTANT</td>
+    <td></td>
+    <td>i.kiladi@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>PATRIKALAKI IOANNA</td>
+    <td>4875</td>
+    <td>ACCOUNTING</td>
+    <td>ASSISTANT</td>
+    <td></td>
+    <td>i.patrikalaki@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>MITAKI STELLA</td>
+    <td>4835</td>
+    <td>ACCOUNTING</td>
+    <td>ASSISTANT</td>
+    <td></td>
+    <td>s.mitaki@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>DIRECT NUMBER</td>
+    <td>2810 333941, 942</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>DIMITRIADI MIKAELA</td>
+    <td>4834</td>
+    <td>CONTRACTS</td>
+    <td>CONTRACTS MANAGER</td>
+    <td>6940460860</td>
+    <td>mikaela.dimitriadi@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>MASTROGIOGLOU CHRYSA</td>
+    <td>4805</td>
+    <td>CONTRACTS</td>
+    <td>CONTRACTS ASSISTANT MANAGER</td>
+    <td>6940460903</td>
+    <td>c.mastrogioglou@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>AGELIDAKIS DIMITRIOS</td>
+    <td>n/a</td>
+    <td>CONTRACTS</td>
+    <td>EXECUTIVE</td>
+    <td>6940460880</td>
+    <td>d.angelidakis@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>PAPADAKI MARIA</td>
+    <td>4844</td>
+    <td>OPERATION</td>
+    <td>OPERATIONS MANAGER</td>
+    <td>6936002330</td>
+    <td>maria.papadaki@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>KAROUZAKIS MANOS</td>
+    <td>4847</td>
+    <td>OPERATIONS, IT, FLEET</td>
+    <td>OPERATIONS, IT, FLEET</td>
+    <td>6936002360</td>
+    <td>m.karouzakis@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>VIARBITSKAYA IRINA</td>
+    <td>4845</td>
+    <td>OPERATION</td>
+    <td>EXCURSIONS</td>
+    <td>6936002331</td>
+    <td>irini.vierbitskaya@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>VASILIADIS THODORIS</td>
+    <td>4843</td>
+    <td>OPERATION</td>
+    <td>OPERATIONS</td>
+    <td></td>
+    <td>t.vasiliadis@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>HEIMONITI GIASEMI</td>
+    <td>4846</td>
+    <td>OPERATION</td>
+    <td>EXCURSIONS</td>
+    <td></td>
+    <td>g.cheimoniti@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>DIRECT NUMBER</td>
+    <td>2810 347212</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>PANKOVA KARINA</td>
+    <td>4855</td>
+    <td>SALES</td>
+    <td>MANAGER</td>
+    <td>6936091508 / 2810347212</td>
+    <td>k.pankova@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>KOLESNIKOV ANTON</td>
+    <td>4840</td>
+    <td>SALES</td>
+    <td>EXECUTIVE</td>
+    <td>6940460897</td>
+    <td>a.kolesnikov@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>MIKAELA CHRONAKI</td>
+    <td>4842</td>
+    <td>SALES</td>
+    <td>EXECUTIVE</td>
+    <td>6947600056</td>
+    <td>michaela.chronaki@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>SAPOSNIKOVA IRINA</td>
+    <td>4820</td>
+    <td>GUEST SERVICE</td>
+    <td>HEAD OF GS</td>
+    <td>6936002309</td>
+    <td>i.saposnikova@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>TATIANA CHIRGIN</td>
+    <td>4821</td>
+    <td>GUEST SERVICE</td>
+    <td>ASSISTANT</td>
+    <td></td>
+    <td>service@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>ANDREICHUK SVETLANA</td>
+    <td>4827</td>
+    <td>GUEST SERVICE</td>
+    <td>AGENT</td>
+    <td></td>
+    <td>s.andreichuk@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>GOAR MURADIAN</td>
+    <td>4825</td>
+    <td>GUEST SERVICE</td>
+    <td>AGENT</td>
+    <td></td>
+    <td>g.muradyan@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>ALESIA ANDREEVA</td>
+    <td>4828</td>
+    <td>GUEST SERVICE</td>
+    <td>AGENT</td>
+    <td></td>
+    <td>a.andreeva@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>GS GENERAL</td>
+    <td>2810 301700/02</td>
+    <td></td>
+    <td>GS GENERAL</td>
+    <td></td>
+    <td>gs@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>FAIZOVA ALENA</td>
+    <td>4848</td>
+    <td>CREATIVE-SM</td>
+    <td>EXECUTIVE</td>
+    <td></td>
+    <td>a.faizova@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>HATZITHEODOROU STAVROULA</td>
+    <td>4860</td>
+    <td>RESERVATION</td>
+    <td>SUPERVISOR</td>
+    <td>6936002303</td>
+    <td>stavroula.hatzitheodorou@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>ALATSAKI IOANNA</td>
+    <td>4862</td>
+    <td>RESERVATION</td>
+    <td>AGENT</td>
+    <td>6940460809</td>
+    <td>i.alatsaki@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>DESPINA HARALAMBAKI</td>
+    <td>4863</td>
+    <td>RESERVATION</td>
+    <td>AGENT</td>
+    <td></td>
+    <td>d.charalampaki@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>DIRECT NUMBER</td>
+    <td>2810 347320, 330</td>
+    <td>RESERVATION</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>SPIVAKOVA VALENTINA</td>
+    <td>4800</td>
+    <td>AUDIT/QC</td>
+    <td>SUPERVISOR</td>
+    <td>6940460913</td>
+    <td>v.spivakova@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>LIKAKI LIA</td>
+    <td>4866</td>
+    <td>CC HOTELS</td>
+    <td>HOTELS HEAD</td>
+    <td></td>
+    <td>l.likaki@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>KOUKA OLGA</td>
+    <td>4870</td>
+    <td>CC HOTELS</td>
+    <td>AGENT</td>
+    <td></td>
+    <td>o.kouka@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>CC HOTELS DIRECT NUMBER</td>
+    <td>2810347213</td>
+    <td>CC HOTELS</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>KYPRIOTAKI MARINA</td>
+    <td>4850</td>
+    <td>CC EXC/TRF SUPERVISOR</td>
+    <td>SUPERVISOR</td>
+    <td></td>
+    <td>m.kupriotaki@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>KOURZAKI HARA</td>
+    <td>4849</td>
+    <td>CC EXC/TR</td>
+    <td>AGENT</td>
+    <td></td>
+    <td>h.kourzaki@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>PANOPOULOU KONSTANTINA</td>
+    <td>4851</td>
+    <td>CC EXC/TR</td>
+    <td>AGENT</td>
+    <td></td>
+    <td>k.panopoulou@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>SIFAKI KATERINA</td>
+    <td>4853</td>
+    <td>CC EXC/TR</td>
+    <td>AGENT</td>
+    <td></td>
+    <td>k.sifaki@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>CC LOCAL DIRECT NUMBER</td>
+    <td>2810347214</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>costcontroltours@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>SIMITSAKIS MANOLIS</td>
+    <td>4878</td>
+    <td>IT</td>
+    <td>SUPERVISOR</td>
+    <td>6949726000 / 2810347204</td>
+    <td>m.simitsakis@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>PAPACHATZAKIS IOANNIS</td>
+    <td>4854</td>
+    <td>INVENTORY</td>
+    <td>SUPERVISOR</td>
+    <td>2810347204 / 6936002305</td>
+    <td>g.papachatzakis@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>OFFICE</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>2810-347200, 2810-347210, 6936002313-14</td>
+    <td>info@teztour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>IRINA CHRONAKI</td>
+    <td></td>
+    <td>AIRPORT</td>
+    <td>SUPERVISOR</td>
+    <td>6936002312</td>
+    <td>i.chronaki@tez-tour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>GROZA NATALIA</td>
+    <td></td>
+    <td>AIRPORT</td>
+    <td>SUPERVISOR</td>
+    <td>6947600055</td>
+    <td>n.Groza@tez-tour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>VALERIA LITVINOVA</td>
+    <td></td>
+    <td>AIRPORT</td>
+    <td>DESK</td>
+    <td>6948109884</td>
+    <td>v.litvinova@tez-tour.gr</td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>DESK</td>
+    <td>*7666</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>CRETE</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>ZACHARAKIS GIORGOS</td>
+    <td></td>
+    <td>OPERATION</td>
+    <td>OPERATIONS MANAGER</td>
+    <td>6940460960</td>
+    <td>g.zaharakis@teztour.gr</td>
+    <td>RHODES</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/QzXeNykps5RJSG32A'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>MARANDI ELENA</td>
+    <td></td>
+    <td>SERVICE</td>
+    <td>SERVICE MANAGER</td>
+    <td>6940460852</td>
+    <td>e.marandi@teztour.gr</td>
+    <td>RHODES</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/QzXeNykps5RJSG32A'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>RHODES OFFICE</td>
+    <td>22410-47265</td>
+    <td></td>
+    <td></td>
+    <td>6940460916</td>
+    <td></td>
+    <td>RHODES</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/QzXeNykps5RJSG32A'); return false;">View on Map</a></td>
+</tr>
+
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="directory2" class="directory" style="display:none">
+                <h3>Service Staff Contacts</h3>
+                <input type="text" class="search-box" placeholder="Search...">
+                <div class="filters">
+                    <select class="filter-dropdown department-filter"></select>
+                    <select class="filter-dropdown region-filter"></select>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>NAME</th>
+                            <th>VOIP</th>
+                            <th>DEPARTMENT</th>
+                            <th>POSITION</th>
+                            <th>CONTACTS</th>
+                            <th>EMAIL</th>
+                            <th>REGION</th>
+                            <th>LOCATION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>CIUZELYTE  MONIKA</td>
+                            <td></td>
+                            <td>SERVICE STAFF</td>
+                            <td>HOTEL GUIDE LITH</td>
+                            <td>987-654-3210</td>
+                            <td>m.ciuzelyte@tez-tour.gr</td>
+                            <td>CRETE</td>
+                            <td><a href="#" onclick="showMap('https://maps.app.goo.gl/bHuEBwJfhBGyK4As6'); return false;">View on Map</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="directory3" class="directory" style="display:none">
+                <h3>Sending Offices</h3>
+                <input type="text" class="search-box" placeholder="Search...">
+                <div class="filters">
+                    <select class="filter-dropdown department-filter"></select>
+                    <select class="filter-dropdown region-filter"></select>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>NAME</th>
+                            <th>VOIP</th>
+                            <th>DEPARTMENT</th>
+                            <th>POSITION</th>
+                            <th>CONTACTS</th>
+                            <th>EMAIL</th>
+                            <th>REGION</th>
+                            <th>LOCATION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+    <td>SINIGIBSKIY ALEXANDER</td>
+    <td>7777, 5708</td>
+    <td></td>
+    <td>GENERAL REPRESENTATIVE</td>
+    <td></td>
+    <td>alex@tez-tour.com</td>
+    <td>RUSSIA</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/FMRmf5xRxabybHs2A'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>BURTIN ALEXANDER</td>
+    <td>1051</td>
+    <td></td>
+    <td>COMMERCIAL DIRECTOR</td>
+    <td></td>
+    <td>burtin@tez-tour.com</td>
+    <td>RUSSIA</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/FMRmf5xRxabybHs2A'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>ARZUMANOV VOSKAN</td>
+    <td>1010</td>
+    <td></td>
+    <td>GENERAL DIRECTOR</td>
+    <td></td>
+    <td>voskan@tez-tour.com</td>
+    <td>RUSSIA</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/FMRmf5xRxabybHs2A'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>SHAGIZDANOVA ZULFIA</td>
+    <td>2111</td>
+    <td></td>
+    <td>ADMINISTRATIVE ASSISTANT</td>
+    <td></td>
+    <td>zulfia@tez-tour.com</td>
+    <td>RUSSIA</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/FMRmf5xRxabybHs2A'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>KAKAULIN NIKOLAY</td>
+    <td>1054</td>
+    <td></td>
+    <td>DEPUTY OF GENERAL DIRECTOR</td>
+    <td></td>
+    <td>n.kakaulin@tez-tour.com</td>
+    <td>RUSSIA</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/FMRmf5xRxabybHs2A'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>PROKOPOV NIKOLAI</td>
+    <td>7755</td>
+    <td></td>
+    <td>FINANCIAL DIRECTOR</td>
+    <td></td>
+    <td>n.prokopov@tez-tour.com</td>
+    <td>RUSSIA</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/FMRmf5xRxabybHs2A'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>GAICHENYA NATALIA</td>
+    <td>1339</td>
+    <td></td>
+    <td>CHIEF ACCOUNTING</td>
+    <td></td>
+    <td>n.gaichenya@tez-tour.com</td>
+    <td>RUSSIA</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/FMRmf5xRxabybHs2A'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>MARTYNOVA (SIDYAKOVA) MARIA</td>
+    <td>1313</td>
+    <td></td>
+    <td>LEADING EXPERT OF PLANNING PURCHASES</td>
+    <td></td>
+    <td>m.sidyakova@tez-tour.com</td>
+    <td>RUSSIA</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/FMRmf5xRxabybHs2A'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>TRETIAKOVA ALLA</td>
+    <td>1046</td>
+    <td></td>
+    <td>CHIEF OF CORPORATE AND VIP PRODUCT DPT</td>
+    <td></td>
+    <td>a.tretyakova@tez-tour.com</td>
+    <td>RUSSIA</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/FMRmf5xRxabybHs2A'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>SALKOVA TATIANA</td>
+    <td>1053</td>
+    <td></td>
+    <td>EXECUTIVE DPT CURATOR / DIRECTOR OF (ooo ттц)</td>
+    <td></td>
+    <td>t.salkova@tez-tour.com</td>
+    <td>RUSSIA</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/FMRmf5xRxabybHs2A'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>HODAKOV ALEKSEY</td>
+    <td>1042</td>
+    <td></td>
+    <td>ACTING HEAD OF EXECUTIVE DPT</td>
+    <td></td>
+    <td>a.hodakov@tez-tour.com</td>
+    <td>RUSSIA</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/FMRmf5xRxabybHs2A'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>PLATONOV DENIS</td>
+    <td>2118</td>
+    <td></td>
+    <td>ACTING HEAD OF DEVELOPMENT OF AGENCY NETWORK DPT</td>
+    <td></td>
+    <td>d.platonov@tez-tour.com / executive@tez-tour.com</td>
+    <td>RUSSIA</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/FMRmf5xRxabybHs2A'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>GLADYSHEVA (SHUMOVA) EKATERINA</td>
+    <td>4484</td>
+    <td></td>
+    <td>CHIEF OF PRICING DPT</td>
+    <td></td>
+    <td>gladysheva@tez-tour.com</td>
+    <td>RUSSIA</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/FMRmf5xRxabybHs2A'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>BACHURIN OLEG</td>
+    <td>1672</td>
+    <td></td>
+    <td>CHIEF OF RESERVATION DPT</td>
+    <td></td>
+    <td>bachurin@tez-tour.com</td>
+    <td>RUSSIA</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/FMRmf5xRxabybHs2A'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>LEONOVA TATIANA</td>
+    <td>7712</td>
+    <td></td>
+    <td>CHIEF OF DEPARTMENT OF AIRCRAFT</td>
+    <td></td>
+    <td>frol@tez-tour.com</td>
+    <td>RUSSIA</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/FMRmf5xRxabybHs2A'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>FIRSOV LEV</td>
+    <td>1043</td>
+    <td></td>
+    <td>CHIEF OF IT DPT</td>
+    <td></td>
+    <td>l.firsov@tez-tour.com</td>
+    <td>RUSSIA</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/FMRmf5xRxabybHs2A'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>PROKAEVA NATALIA</td>
+    <td>1651</td>
+    <td></td>
+    <td>SENIOR RESERVATION MANAGER</td>
+    <td></td>
+    <td>n.prokaeva@tez-tour.com</td>
+    <td>RUSSIA</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/FMRmf5xRxabybHs2A'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>PEDCHENKO DMITRI</td>
+    <td>1675</td>
+    <td></td>
+    <td>SENIOR RESERVATION MANAGER</td>
+    <td></td>
+    <td>d.pedchenko@tez-tour.com</td>
+    <td>RUSSIA</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/FMRmf5xRxabybHs2A'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>ELENA LENKOVA</td>
+    <td>2126</td>
+    <td></td>
+    <td>GENERAL MANAGER OF VISA DPT</td>
+    <td></td>
+    <td>e.lenkova@tez-tour.com</td>
+    <td>RUSSIA</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/FMRmf5xRxabybHs2A'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>EVICH POLINA</td>
+    <td>1047</td>
+    <td></td>
+    <td>CHIEF OF QUALITY DPT</td>
+    <td></td>
+    <td>p.evich@tez-tour.com</td>
+    <td>RUSSIA</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/FMRmf5xRxabybHs2A'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>ELENA YAKIMOVA</td>
+    <td>1025</td>
+    <td></td>
+    <td>HEAD OF MARKETING DPT</td>
+    <td></td>
+    <td>e.yakimova@tez-tour.com</td>
+    <td>RUSSIA</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/FMRmf5xRxabybHs2A'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>IYRCHENKO NATALIA</td>
+    <td>1475</td>
+    <td></td>
+    <td>HEAD OF MARKETING DPT</td>
+    <td></td>
+    <td>n.jurchenko@tez-tour.com</td>
+    <td>RUSSIA</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/FMRmf5xRxabybHs2A'); return false;">View on Map</a></td>
+</tr>
+<tr>
+    <td>BOGACHEVA ZANNA</td>
+    <td>1473</td>
+    <td></td>
+    <td>PR DIRECTOR</td>
+    <td></td>
+    <td>z.bogacheva@tez-tour.com</td>
+    <td>RUSSIA</td>
+    <td><a href="#" onclick="showMap('https://maps.app.goo.gl/FMRmf5xRxabybHs2A'); return false;">View on Map</a></td>
+</tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="map-container">
+            <h3>Location Map</h3>
+            <iframe id="mapFrame" src="" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <script>
+        function updateFilters(directory) {
+            let departments = new Set();
+            let regions = new Set();
+            directory.find("tbody tr").each(function () {
+                departments.add($(this).find("td:nth-child(3)").text());
+                regions.add($(this).find("td:nth-child(7)").text());
+            });
+            const departmentFilter = directory.find(".department-filter");
+            const regionFilter = directory.find(".region-filter");
+
+            departmentFilter.empty().append('<option value="">All Departments</option>');
+            regionFilter.empty().append('<option value="">All Regions</option>');
+            departments.forEach(dep => departmentFilter.append(`<option value="${dep}">${dep}</option>`));
+            regions.forEach(reg => regionFilter.append(`<option value="${reg}">${reg}</option>`));
+        }
+
+        function applyFilters(directory) {
+            const search = directory.find(".search-box").val().toLowerCase();
+            const dep = directory.find(".department-filter").val();
+            const reg = directory.find(".region-filter").val();
+
+            directory.find("tbody tr").each(function () {
+                const row = $(this);
+                const text = row.text().toLowerCase();
+                const rowDep = row.find("td:nth-child(3)").text();
+                const rowReg = row.find("td:nth-child(7)").text();
+
+                const matchSearch = text.includes(search);
+                const matchDep = !dep || dep === rowDep;
+                const matchReg = !reg || reg === rowReg;
+
+                row.toggle(matchSearch && matchDep && matchReg);
+            });
+        }
+
+        function showMap(url) {
+            $('#mapFrame').attr('src', url);
+            $('#map-container').show();
+        }
+
+        $(document).ready(function () {
+            $('.directory').each(function () {
+                const dir = $(this);
+                updateFilters(dir);
+
+                dir.find('.search-box, .filter-dropdown').on('input change', function () {
+                    applyFilters(dir);
+                });
+            });
+
+            $('#directorySelect').on('change', function () {
+                const selected = $(this).val();
+                $('.directory').hide();
+                $('#' + selected).show();
+            });
+        });
+    </script>
+</body>
+</html>
