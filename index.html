@@ -1020,9 +1020,12 @@
             });
         }
 
-        function showMap(url) {
-            $('#mapFrame').attr('src', url);
-            $('#map-container').show();
+       function showMap(url) {
+    // Convert short URL into a Google Maps embed URL
+    let embedUrl = url.replace("https://maps.app.goo.gl/", "https://www.google.com/maps?q=");
+    
+    $('#mapFrame').attr('src', embedUrl);
+    $('#map-container').show();
         }
 
         $(document).ready(function () {
